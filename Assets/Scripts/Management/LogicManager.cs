@@ -287,7 +287,7 @@ public class LogicManager : ILogicManager, IUpdatable
         }
     }
 
-    public void Swap() 
+    public void Swap()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -320,7 +320,7 @@ public class LogicManager : ILogicManager, IUpdatable
                         _selectObject.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
 
                         ChangeCells(); //swap элементов и ячеек соответственно
-                        CheckLine(); 
+                        CheckLine();
 
                         if (!_isRemove)
                         {
@@ -338,7 +338,7 @@ public class LogicManager : ILogicManager, IUpdatable
 
                     selectX = -1;
                     selectY = -1;
-                    swapX = -1; 
+                    swapX = -1;
                     swapY = -1;
                 }
             }
@@ -357,17 +357,17 @@ public class LogicManager : ILogicManager, IUpdatable
 
         Cells[selectX, selectY].transform.Translate(tempPos2, Space.World); //здесь ячейки перемещаются хоть и должны быть неподвижны
         Cells[swapX, swapY].transform.Translate(tempPos1, Space.World);     //ниже они обмениваются значениями
-        
-        Cells[selectX, selectY].name = _objectsStorage.Elements[swapX, swapY].ID; 
+
+        Cells[selectX, selectY].name = _objectsStorage.Elements[swapX, swapY].ID;
         Cells[swapX, swapY].name = _objectsStorage.Elements[selectX, selectY].ID;
-        
+
         GameObject tempCell = Cells[selectX, selectY];
         Cells[selectX, selectY] = Cells[swapX, swapY];
         Cells[swapX, swapY] = tempCell;
     }
     void ReturnCells() //swap элементов и ячеек обратно т.к. линии не получается
     {
-        Vector3 tempPos1 = _swapObject.transform.position - _selectObject.transform.position; 
+        Vector3 tempPos1 = _swapObject.transform.position - _selectObject.transform.position;
         Vector3 tempPos2 = _selectObject.transform.position - _swapObject.transform.position;
 
         Color color = _objectsStorage.Elements[swapX, swapY].ElementColor;
@@ -377,7 +377,7 @@ public class LogicManager : ILogicManager, IUpdatable
         Cells[selectX, selectY].transform.Translate(tempPos2, Space.World);
         Cells[swapX, swapY].transform.Translate(tempPos1, Space.World);
 
-        Cells[selectX, selectY].name = _objectsStorage.Elements[swapX, swapY].ID; 
+        Cells[selectX, selectY].name = _objectsStorage.Elements[swapX, swapY].ID;
         Cells[swapX, swapY].name = _objectsStorage.Elements[selectX, selectX].ID;
 
         GameObject tempCell = Cells[swapX, swapY];
@@ -394,14 +394,10 @@ public class LogicManager : ILogicManager, IUpdatable
                 {
                     Element topElement = CheckTop(i, j); //проверяем верхние элементы что переместить первый возможный
                     //Debug.Log(_objectsStorage.Elements[i, j].ID + "-" + topElement.ID);
-                    _objectsStorage.Elements[i, j].ElementColor = topElement.ElementColor;
-                    _objectsStorage.Elements[i, j].ElementType = topElement.ElementType;
-                    _objectsStorage.Elements[i, j].ID = topElement.ID;
-                    _objectsStorage.Elements[i, j].Xpos = topElement.Xpos;
-                    _objectsStorage.Elements[i, j].Ypos = topElement.Ypos;
+                    _objectsStorage.Elements[i, j] = (Element)topElement.Clone();
                     //Debug.Log(_objectsStorage.Elements[topElement.Xpos, topElement.Ypos].ElementType);
 
-                    if(topElement.Ypos != Columns - 1)
+                    if (topElement.Ypos != Columns - 1)
                     {
                         _objectsStorage.Elements[topElement.Xpos, topElement.Ypos].ElementType = Type.Empty;
                     }
@@ -411,30 +407,33 @@ public class LogicManager : ILogicManager, IUpdatable
         }
     }
 
-    Element CheckTop(int i, int j) 
+    Element CheckTop(int i, int j)
     {
-        if (j < Rows - 1 && _objectsStorage.Elements[i, j + 1].ElementType == Type.Empty)
+        var jj = j;
+
+        if (jj < Rows - 1 && _objectsStorage.Elements[i, jj + 1].ElementType == Type.Empty)
         {
-            CheckTop(i, j + 1);
+            CheckTop(i, jj + 1);
         }
-        if (j == Rows - 1 && _objectsStorage.Elements[i, j].ElementType == Type.Empty)
+
+        if (jj == Rows - 1 && _objectsStorage.Elements[i, jj].ElementType == Type.Empty)
         {
             ChangeEmpty();
             //Debug.Log("1");
-            return _objectsStorage.Elements[i, j];
+            return _objectsStorage.Elements[i, jj];
         }
-        else if (j != Columns - 1)
+        else if (jj != Columns - 1)
         {
             //Debug.Log("2");
             //Debug.Log("return " + _objectsStorage.Elements[i, j + 1].ID);
-            return _objectsStorage.Elements[i, j + 1]; 
+            return _objectsStorage.Elements[i, jj + 1];
         }
         else
         {
             //Debug.Log("3");
-            return _objectsStorage.Elements[i, j];
+            return _objectsStorage.Elements[i, jj];
         }
-        
+
     }
 
     void ChangeEmpty() //элементы с типо Empty преобразуем, создав новый рандомный элемент
@@ -463,7 +462,7 @@ public class LogicManager : ILogicManager, IUpdatable
 
 
 
-    
+
 }
 
 
