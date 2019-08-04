@@ -18,8 +18,8 @@
 ```csharp
 public static class Constants
 {
-public const string ConnectionStringForTestDb = // your connection string for test DB
-public const string ConnectionString  = //your connection string for main DB 
+	public const string ConnectionStringForTestDb = // your connection string for test DB
+	public const string ConnectionString  = //your connection string for main DB 
 }
 ```
 
