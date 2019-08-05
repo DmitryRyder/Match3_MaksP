@@ -6,7 +6,7 @@
 * .Net Framework 4.7.2
 
 ## Some conditions
-* If you have failed to find part of the path * ```shell... bin \ roslyn \ csc.exe``` * execute the command in the package manager:
+* If you have failed to find part of the path ```shell... bin \ roslyn \ csc.exe``` execute the command in the package manager:
 ```shell
 Update-Package Microsoft.CodeDom.Providers.DotNetCompilerPlatform -r
 ```
