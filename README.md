@@ -6,7 +6,10 @@
 * .Net Framework 4.7.2
 
 ## Some conditions
-
+* If you have failed to find part of the path * ```shell... bin \ roslyn \ csc.exe``` * execute the command in the package manager:
+```shell
+Update-Package Microsoft.CodeDom.Providers.DotNetCompilerPlatform -r
+```
 * If you decide rebuild database then you need replace .dacpac file for IntegrationTestTiketsManagment project as well.
 * If you decide rename database for tests you should change property DbName in DbInitializer class
 
